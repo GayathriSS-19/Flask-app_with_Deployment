@@ -1,0 +1,63 @@
+in flask shell
+>>from app import Students,db
+>>db.create_all()   #to create tables that are associated with our model
+>>> student_Gayathri=Students(firstname="Gayathri Sai Sree",lastname="Polamarasetti",email="gayathrisaisreepolamarasetti@gmail.com",age=19,About="Enthusiastic Student")
+>>> student_Gayathri   #as in app.py only firstname is meant to return
+<StudentsGayathri Sai Sree
+>>> student_Gayathri.firstname
+'Gayathri Sai Sree'
+>>> student_Gayathri.lastname
+'Polamarasetti'
+>>> student_Gayathri.age
+19
+>>> print(student_Gayathri.id)
+None
+>>> db.session.add(student_Gayathri)   #to store in the database
+>>> db.session.commit
+<bound method commit of <sqlalchemy.orm.scoping.scoped_session object at 0x000001F6A98E6850>>
+>>> db.session.commit()
+>>> print(student_Gayathri.id)
+1 
+Students.query.all()
+[<StudentsGayathri Sai Sree]
+ student_bhavana=Students(firstname="Bhavana",lastname="Boda",email="bhavanaboda@gmail.com",age=19,About="Student")
+>>> student_bhavana
+<StudentsBhavana
+>>> print(student_bhavana.id)
+None
+>>> db.session.add(student_bhavana)
+>>> student_hafsa=Students(firstname="Hafsa",lastname="Zareen",email="hafsazareen@gmail.com",age=19,About="Student")
+>>> db.session.add(student_hafsa)
+>>> student_srija=Students(firstname="Srija",lastname="Esampalli",email="srijaesampalli@gmail.com",age=19,About="Student")
+>>> db.session.add(student_srija)
+>>> db.commit()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'SQLAlchemy' object has no attribute 'commit'
+>>> db.session.commit()
+>>> Students.query.all()
+[<StudentsGayathri Sai Sree, <StudentsBhavana, <StudentsHafsa, <StudentsSrija]
+#Populating the table is done
+
+#start with showing the database in the web page
+
+>>> from app import db,Students
+>>> Students.query.filter_by(firstname="Sravanthi")
+<flask_sqlalchemy.BaseQuery object at 0x000001DDB5555790>
+>>> Students.query.filter_by(firstname="Sravanthi").all()
+[]
+>>> Students.query.filter_by(firstname="gayathri").all()
+[]
+>>> Students.query.filter_by(firstname="GAYATHRI").all()
+[]
+>>> Students.query.filter_by(firstname="Gayathri Sai Sree").all()
+[<StudentsGayathri Sai Sree]    #it is case sensitive
+>>> Students.query.get(2)
+<StudentsBhavana
+>>> Students.query.get(1)
+<StudentsGayathri Sai Sree
+>>> Students.query.get(3)
+<StudentsHafsa
+>>> Students.query.get(4)
+<StudentsSrija
+3:35:00
