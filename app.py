@@ -1,5 +1,4 @@
 
-from operator import methodcaller
 from flask import Flask,render_template,request,url_for,redirect  #url_for is for constructing url for routes,redirect is for redirecting the user
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
